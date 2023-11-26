@@ -1,0 +1,394 @@
+Index: app/src/main/java/com/example/pim/FormLogin.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pim\r\n\r\nimport android.content.Intent\r\nimport android.graphics.Color\r\nimport android.os.Bundle\r\nimport android.os.Handler\r\nimport android.os.Looper\r\nimport android.view.View\r\nimport android.widget.TextView\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport com.example.pim.databinding.ActivityFormLoginBinding // Correct import\r\nimport com.example.pim.ui.theme.TelaPrincipal\r\nimport com.google.android.material.snackbar.Snackbar\r\n\r\nclass FormLogin : AppCompatActivity() {\r\n\r\n    private lateinit var binding: ActivityFormLoginBinding\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n        binding = ActivityFormLoginBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        supportActionBar!!.hide()\r\n        window.statusBarColor = Color.parseColor(\"#FFFFFF\")\r\n\r\n        binding.ButtonLogin.setOnClickListener{//validacao ao apertar o botao(Button_Login) de login\r\n\r\n            val email = binding.EditEmail.text.toString()\r\n            val password = binding.EditPassword.text.toString()\r\n\r\n            when{\r\n                email.isEmpty() -> {//erro por falta de Emal\r\n                    binding.EditEmail.error = \"Preencha o Email!\"\r\n                }\r\n                password.isEmpty() ->{//erro por falto da senha\r\n                    binding.EditPassword.error = \"Digite a senha!\"\r\n                }\r\n                !email.contains(\"@gmail.com\") -> {//validacao se tem o @gmail ou nao\r\n                    val snackbar = Snackbar.make(it,\"Email invalido!\",Snackbar.LENGTH_SHORT)\r\n                    snackbar.show()\r\n                }\r\n                password.length <= 5 ->{//erro senha invalida\r\n                    val snackbar = Snackbar.make(it,\"Senha invalida! A senha tem pelo menos 6 caracteres!\",Snackbar.LENGTH_SHORT)\r\n                    snackbar.show()\r\n                }\r\n                else ->{//mensagem logao com sucesso\r\n                login(it)\r\n                }\r\n            }\r\n        }\r\n    }\r\n    private fun login(view: View){//login\r\n        binding.ButtonLogin.isEnabled = false //desabilita o botao(Button_Login) apos clicar nele\r\n        binding.ButtonLogin.setTextColor(Color.parseColor(\"#FFFFFF\"))\r\n\r\n        Handler(Looper.getMainLooper()).postDelayed({\r\n            navegarTelaPrincipal()//Navega para a tela principal\r\n            val snackbar = Snackbar.make(view,\"Login efetuado com sucesso!\",Snackbar.LENGTH_SHORT)\r\n            snackbar.show()\r\n\r\n            // Desbloqueia o botão após o atraso\r\n            binding.ButtonLogin.isEnabled = true\r\n            binding.ButtonLogin.setTextColor(Color.parseColor(\"#000000\"))\r\n        },3000)\r\n    }\r\n\r\n    private fun navegarTelaPrincipal(){//manda para tela principal\r\n        val intent = Intent(this,TelaPrincipal::class.java)\r\n        startActivity(intent)\r\n        finish()\r\n    }\r\n\r\n    class FormLogin : AppCompatActivity() {\r\n\r\n        private lateinit var recuperarCadastro: TextView\r\n\r\n        override fun onCreate(savedInstanceState: Bundle?) {\r\n            super.onCreate(savedInstanceState)\r\n            setContentView(R.layout.activity_rec_senha)\r\n\r\n            recuperarCadastro.setOnClickListener {\r\n                val intent = Intent(this@FormLogin, RecSenha::class.java)\r\n                startActivity(intent)\r\n            }\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n}\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/pim/FormLogin.kt b/app/src/main/java/com/example/pim/FormLogin.kt
+--- a/app/src/main/java/com/example/pim/FormLogin.kt	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/app/src/main/java/com/example/pim/FormLogin.kt	(date 1701131896017)
+@@ -6,11 +6,11 @@
+ import android.os.Handler
+ import android.os.Looper
+ import android.view.View
+-import android.widget.TextView
+ import androidx.appcompat.app.AppCompatActivity
+-import com.example.pim.databinding.ActivityFormLoginBinding // Correct import
++import com.example.pim.databinding.ActivityFormLoginBinding
+ import com.example.pim.ui.theme.TelaPrincipal
+ import com.google.android.material.snackbar.Snackbar
++import android.util.Log
+ 
+ class FormLogin : AppCompatActivity() {
+ 
+@@ -18,78 +18,78 @@
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-
+         binding = ActivityFormLoginBinding.inflate(layoutInflater)
+         setContentView(binding.root)
+ 
++        binding.RecSenha.setOnClickListener {
++            Log.d("FormLogin", "Botão RecSenha clicado")
++            val intent = Intent(this, RecSenha::class.java)
++            startActivity(intent)
++        }
++
+         supportActionBar!!.hide()
+         window.statusBarColor = Color.parseColor("#FFFFFF")
+ 
+-        binding.ButtonLogin.setOnClickListener{//validacao ao apertar o botao(Button_Login) de login
+-
++        binding.ButtonLogin.setOnClickListener {//validacao ao apertar o botao(Button_Login) de login
+             val email = binding.EditEmail.text.toString()
+             val password = binding.EditPassword.text.toString()
+ 
+-            when{
+-                email.isEmpty() -> {//erro por falta de Emal
++            when {
++                email.isEmpty() -> {//erro por falta de Email
+                     binding.EditEmail.error = "Preencha o Email!"
+                 }
+-                password.isEmpty() ->{//erro por falto da senha
++
++                password.isEmpty() -> {//erro por falta da senha
+                     binding.EditPassword.error = "Digite a senha!"
+                 }
++
+                 !email.contains("@gmail.com") -> {//validacao se tem o @gmail ou nao
+-                    val snackbar = Snackbar.make(it,"Email invalido!",Snackbar.LENGTH_SHORT)
++                    val snackbar = Snackbar.make(
++                        it,
++                        "Email inválido!",
++                        Snackbar.LENGTH_SHORT
++                    )
+                     snackbar.show()
+                 }
+-                password.length <= 5 ->{//erro senha invalida
+-                    val snackbar = Snackbar.make(it,"Senha invalida! A senha tem pelo menos 6 caracteres!",Snackbar.LENGTH_SHORT)
++
++                password.length <= 5 -> {//erro senha inválida
++                    val snackbar = Snackbar.make(
++                        it,
++                        "Senha inválida! A senha deve ter pelo menos 6 caracteres!",
++                        Snackbar.LENGTH_SHORT
++                    )
+                     snackbar.show()
+                 }
+-                else ->{//mensagem logao com sucesso
+-                login(it)
++
++                else -> {//mensagem logado com sucesso
++                    login(it)
+                 }
+             }
+         }
+     }
+-    private fun login(view: View){//login
+-        binding.ButtonLogin.isEnabled = false //desabilita o botao(Button_Login) apos clicar nele
++
++    private fun login(view: View) {//login
++        binding.ButtonLogin.isEnabled = false //desabilita o botão(Button_Login) após clicar nele
+         binding.ButtonLogin.setTextColor(Color.parseColor("#FFFFFF"))
+ 
+         Handler(Looper.getMainLooper()).postDelayed({
+             navegarTelaPrincipal()//Navega para a tela principal
+-            val snackbar = Snackbar.make(view,"Login efetuado com sucesso!",Snackbar.LENGTH_SHORT)
++            val snackbar = Snackbar.make(
++                view,
++                "Login efetuado com sucesso!",
++                Snackbar.LENGTH_SHORT
++            )
+             snackbar.show()
+ 
+             // Desbloqueia o botão após o atraso
+             binding.ButtonLogin.isEnabled = true
+             binding.ButtonLogin.setTextColor(Color.parseColor("#000000"))
+-        },3000)
++        }, 3000)
+     }
+ 
+-    private fun navegarTelaPrincipal(){//manda para tela principal
+-        val intent = Intent(this,TelaPrincipal::class.java)
++    private fun navegarTelaPrincipal() {//manda para tela principal
++        val intent = Intent(this, TelaPrincipal::class.java)
+         startActivity(intent)
+         finish()
+     }
+-
+-    class FormLogin : AppCompatActivity() {
+-
+-        private lateinit var recuperarCadastro: TextView
+-
+-        override fun onCreate(savedInstanceState: Bundle?) {
+-            super.onCreate(savedInstanceState)
+-            setContentView(R.layout.activity_rec_senha)
+-
+-            recuperarCadastro.setOnClickListener {
+-                val intent = Intent(this@FormLogin, RecSenha::class.java)
+-                startActivity(intent)
+-            }
+-        }
+-
+-    }
+-
+-
+-
+-
+ }
+-
+Index: app/src/main/res/layout/activity_form_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.core.widget.NestedScrollView\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:fillViewport=\"true\"\r\n    xmlns:android=\"http://schemas.android.com/apk/res/android\">\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:background=\"@color/white\"\r\n    tools:context=\".FormLogin\">\r\n\r\n    <ImageView\r\n        android:id=\"@+id/logo\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"200dp\"\r\n        android:src=\"@drawable/logopim\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\"\r\n        />\r\n\r\n    <View\r\n        android:id=\"@+id/containerComponents\"\r\n        style=\"@style/ContainerComponents\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/logo\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/Edit_email\"\r\n        style=\"@style/Edit_Text\"\r\n        android:hint=\"Email\"\r\n        android:maxLines=\"1\"\r\n        android:singleLine=\"true\"\r\n        android:inputType=\"textEmailAddress\"\r\n        android:drawableRight=\"@drawable/ic_email\"\r\n        app:layout_constraintStart_toEndOf=\"@id/containerComponents\"\r\n        app:layout_constraintEnd_toEndOf=\"@id/containerComponents\"\r\n        app:layout_constraintTop_toTopOf=\"@id/containerComponents\"\r\n        />\r\n\r\n    <EditText\r\n        android:id=\"@+id/Edit_password\"\r\n        style=\"@style/Edit_Text\"\r\n        android:hint=\"Senha\"\r\n        android:maxLines=\"1\"\r\n        android:singleLine=\"true\"\r\n        android:inputType=\"textPassword\"\r\n        android:drawableEnd=\"@drawable/ic_password\"\r\n        app:layout_constraintStart_toEndOf=\"@id/containerComponents\"\r\n        app:layout_constraintEnd_toEndOf=\"@id/containerComponents\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/Edit_email\"\r\n        tools:ignore=\"HardcodedText\" />\r\n\r\n    <Button\r\n        style=\"@style/Buttom\"\r\n        android:id=\"@+id/ButtonLogin\"\r\n        android:text=\"@string/Login\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/Edit_password\"\r\n        />\r\n\r\n    <TextView\r\n        android:id=\"@+id/Esqueceuasenha\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_marginEnd=\"20dp\"\r\n        android:text=\"@string/ForgetPassword\"\r\n        android:textColor=\"@color/black\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintTop_toBottomOf=\"@id/containerComponents\" />\r\n\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>\r\n</androidx.core.widget.NestedScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_form_login.xml b/app/src/main/res/layout/activity_form_login.xml
+--- a/app/src/main/res/layout/activity_form_login.xml	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/app/src/main/res/layout/activity_form_login.xml	(date 1701131421693)
+@@ -1,12 +1,12 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <androidx.core.widget.NestedScrollView
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:fillViewport="true"
+     xmlns:android="http://schemas.android.com/apk/res/android">
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
++<androidx.constraintlayout.widget.ConstraintLayout
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     android:background="@color/white"
+@@ -45,13 +45,15 @@
+     <EditText
+         android:id="@+id/Edit_password"
+         style="@style/Edit_Text"
++        android:layout_marginTop="16dp"
++        android:drawableEnd="@drawable/ic_password"
+         android:hint="Senha"
++        android:inputType="numberPassword"
+         android:maxLines="1"
+         android:singleLine="true"
+-        android:inputType="textPassword"
+-        android:drawableEnd="@drawable/ic_password"
+-        app:layout_constraintStart_toEndOf="@id/containerComponents"
+         app:layout_constraintEnd_toEndOf="@id/containerComponents"
++        app:layout_constraintHorizontal_bias="1.0"
++        app:layout_constraintStart_toEndOf="@id/containerComponents"
+         app:layout_constraintTop_toBottomOf="@id/Edit_email"
+         tools:ignore="HardcodedText" />
+ 
+@@ -65,10 +67,11 @@
+         />
+ 
+     <TextView
+-        android:id="@+id/Esqueceuasenha"
++        android:id="@+id/RecSenha"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+-        android:layout_marginEnd="20dp"
++        android:layout_marginEnd="32dp"
++        android:textSize="16sp"
+         android:text="@string/ForgetPassword"
+         android:textColor="@color/black"
+         app:layout_constraintEnd_toEndOf="parent"
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\">\r\n\r\n    <application\r\n        android:allowBackup=\"true\"\r\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\r\n        android:fullBackupContent=\"@xml/backup_rules\"\r\n        android:icon=\"@mipmap/ic_launcher\"\r\n        android:label=\"@string/app_name\"\r\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\r\n        android:supportsRtl=\"true\"\r\n        android:theme=\"@style/Theme.PIM\"\r\n        tools:targetApi=\"31\">\r\n        <activity\r\n            android:name=\".RecSenha\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ui.theme.EsqueceuaSenha\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".ui.theme.TelaPrincipal\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".MainActivity\"\r\n            android:exported=\"false\" />\r\n        <activity\r\n            android:name=\".FormLogin\"\r\n            android:exported=\"true\"\r\n            android:label=\"@string/app_name\"\r\n            android:theme=\"@style/Theme.AppCompat\">\r\n            <intent-filter>\r\n                <action android:name=\"android.intent.action.MAIN\" />\r\n\r\n                <category android:name=\"android.intent.category.LAUNCHER\" />\r\n            </intent-filter>\r\n        </activity>\r\n    </application>\r\n\r\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/app/src/main/AndroidManifest.xml	(date 1701131794900)
+@@ -14,10 +14,8 @@
+         tools:targetApi="31">
+         <activity
+             android:name=".RecSenha"
+-            android:exported="false" />
+-        <activity
+-            android:name=".ui.theme.EsqueceuaSenha"
+-            android:exported="false" />
++            android:exported="true"
++            android:theme="@style/Theme.AppCompat"/>
+         <activity
+             android:name=".ui.theme.TelaPrincipal"
+             android:exported="false" />
+Index: app/src/main/res/layout/activity_rec_senha.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".RecSenha\">\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_rec_senha.xml b/app/src/main/res/layout/activity_rec_senha.xml
+--- a/app/src/main/res/layout/activity_rec_senha.xml	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/app/src/main/res/layout/activity_rec_senha.xml	(date 1701131630191)
+@@ -1,9 +1,66 @@
+ <?xml version="1.0" encoding="utf-8"?>
+-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++<androidx.core.widget.NestedScrollView
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    tools:context=".RecSenha">
++    android:fillViewport="true"
++    xmlns:android="http://schemas.android.com/apk/res/android">
++<androidx.constraintlayout.widget.ConstraintLayout
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".RecSenha"
++    android:background="@color/white">
++
++    <ImageView
++        android:id="@+id/logo"
++        android:layout_width="200dp"
++        android:layout_height="200dp"
++        android:src="@drawable/logopim"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintBottom_toTopOf="@id/Edit_email"
++        />
++
++    <EditText
++        android:id="@+id/Edit_email"
++        style="@style/Edit_Text"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="16dp"
++        android:hint="Digite seu Email"
++        android:inputType="textEmailAddress"
++        android:maxLines="1"
++        android:singleLine="true"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/logo" />
++
++    <Button
++        android:id="@+id/ButtonRecSenha"
++        style="@style/Buttom"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:text="@string/RecSenha"
++        app:layout_constraintBottom_toBottomOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.2"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/Edit_email"
++        app:layout_constraintVertical_bias="0.036" />
+ 
+-</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
++    <TextView
++        android:id="@+id/ButtonVoltar"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="16dp"
++        android:layout_marginEnd="40dp"
++        android:text="Voltar ao login"
++        android:textColor="@color/black"
++        android:textSize="16sp"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/ButtonRecSenha" />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
++</androidx.core.widget.NestedScrollView>
+\ No newline at end of file
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">PIM</string>\r\n    <string name=\"Login\">Login</string>\r\n    <string name=\"ForgetPassword\">Esqueceu a senha?</string>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/app/src/main/res/values/strings.xml	(date 1701126014932)
+@@ -2,5 +2,6 @@
+     <string name="app_name">PIM</string>
+     <string name="Login">Login</string>
+     <string name="ForgetPassword">Esqueceu a senha?</string>
++    <string name="RecSenha">Recuperar Senha</string>
+ 
+ </resources>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><project version=\"4\">\r\n  <component name=\"ExternalStorageConfigurationManager\" enabled=\"true\" />\r\n  <component name=\"ProjectRootManager\" version=\"2\" languageLevel=\"JDK_17\" default=\"true\" project-jdk-name=\"jbr-17\" project-jdk-type=\"JavaSDK\">\r\n    <output url=\"file://$PROJECT_DIR$/build/classes\" />\r\n  </component>\r\n  <component name=\"ProjectType\">\r\n    <option name=\"id\" value=\"Android\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+--- a/.idea/misc.xml	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/.idea/misc.xml	(date 1701107097713)
+@@ -1,3 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ExternalStorageConfigurationManager" enabled="true" />
+   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="jbr-17" project-jdk-type="JavaSDK">
+Index: app/src/main/java/com/example/pim/RecSenha.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.pim\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\n\r\nclass RecSenha : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_rec_senha)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/pim/RecSenha.kt b/app/src/main/java/com/example/pim/RecSenha.kt
+--- a/app/src/main/java/com/example/pim/RecSenha.kt	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/app/src/main/java/com/example/pim/RecSenha.kt	(date 1701132756822)
+@@ -1,11 +1,24 @@
+ package com.example.pim
+ 
+-import androidx.appcompat.app.AppCompatActivity
++import android.content.Intent
+ import android.os.Bundle
++import android.util.Log
++import androidx.appcompat.app.AppCompatActivity
++import com.example.pim.databinding.ActivityFormLoginBinding
++import com.example.pim.databinding.ActivityRecSenhaBinding
+ 
+ class RecSenha : AppCompatActivity() {
++    private lateinit var binding: ActivityRecSenhaBinding // Declare o objeto de binding
++
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+-        setContentView(R.layout.activity_rec_senha)
++        binding = ActivityRecSenhaBinding.inflate(layoutInflater)
++        setContentView(binding.root)
++
++        binding.ButtonVoltar.setOnClickListener {
++            Log.d("RecSenha", "Botão RecSenha clicado")
++            val intent = Intent(this, FormLogin::class.java)
++            startActivity(intent)
++        }
+     }
+-}
+\ No newline at end of file
++}
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"GRADLE\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"gradleJvm\" value=\"jbr-17\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision e1786f8b92b82a930b2a06f5947b56f9d513063a)
++++ b/.idea/gradle.xml	(date 1701107097723)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
